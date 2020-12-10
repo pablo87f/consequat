@@ -1,21 +1,18 @@
 import React from 'react';
-
+import Layout from '../components/layout'
 
 import { Button } from '@material-ui/core';
 import Link from "next/link";
-import MainLayout from '../layouts/main.layout';
 
-export default function Home() {
+export default function About() {
   return (
-    <MainLayout selectedMenuValue={"home"}>
-       
+    <Layout about>
       <Link href='/receitas'>
         <a>
 
        <Button color="primary">Ir pra Receitas</Button>
         </a>
       </Link>
-    
-    </MainLayout>
+    </Layout>
   );
 }
