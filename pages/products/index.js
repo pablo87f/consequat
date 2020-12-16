@@ -1,23 +1,14 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
+import React from 'react';
 
 
-function Produtos() {
-    return (
-        <Layout produtos>
-            <Head>
-                <title>{siteTitle}</title>
-            </Head>
-            <section className={utilStyles.headingMd}>
-                <p>[Your Self Introduction]</p>
-                <p>
-                    (This is a sample website - you’ll be building a site like this on{' '}
-                    <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-          </p>
-            </section>
-        </Layout>
-    )
+import { Button } from '@material-ui/core';
+import MainLayout from '../../layouts/main.layout';
+
+
+export default function Produtos() {
+  return (
+    <MainLayout selectedMenuValue={"receitas"}>
+      <Button color="primary">Olá mundo - Recipes</Button>
+    </MainLayout>
+  );
 }
-
-export default Produtos

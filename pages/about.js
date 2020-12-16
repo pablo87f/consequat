@@ -1,18 +1,18 @@
 import React from 'react';
-import Layout from '../components/layout'
+import MainLayout from '../layouts/main.layout'
 
 import { Button } from '@material-ui/core';
 import Link from "next/link";
 
 export default function About() {
   return (
-    <Layout about>
+    <MainLayout about>
       <Link href='/receitas'>
         <a>
 
        <Button color="primary">Ir pra Receitas</Button>
         </a>
       </Link>
-    </Layout>
+    </MainLayout>
   );
 }
