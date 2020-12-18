@@ -120,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    backgroundColor: `#fafafa`
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -175,9 +176,9 @@ export default function MainLayout({ children, selectedMenuValue }) {
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <div>{children}</div>
+        <Container maxWidth="lg" className={classes.container} >
+          <Grid container spacing={3} >
+            {children}
           </Grid>
           {/* <Box pt={4}>
             <Copyright />

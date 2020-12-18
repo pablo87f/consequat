@@ -11,6 +11,11 @@ const mainMenuItems = [
     icon: DashboardIcon
   },
   {
+    title: "Produtos",
+    value: "produtos",
+    icon: LayersIcon
+  },
+  {
     title: "Receitas",
     value: "receitas",
     icon: ShoppingCartIcon
