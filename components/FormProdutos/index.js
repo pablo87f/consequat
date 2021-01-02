@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControl, FormLabel, Grid, Paper, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
-
 import { Autocomplete } from '@material-ui/lab';
-
 import { TextField } from "../TextField";
-
 import { RecuperarUnidadesMedidaService } from "../../services/RecuperarUnidadesMedida.service";
 import { FormatarUnidadesMedidaService as FormatarUnidadeMedidaService, FormatarUnidadesMedidaService } from "../../services/FormatarUnidadeMedida.service";
+import SnackbarUtils from "../../utils/snackbar.util";
 import Link from 'next/link';
 
 export default function FormProdutos({ produto }) {
@@ -38,6 +36,7 @@ export default function FormProdutos({ produto }) {
 
   const handleClickSalvar = () => {
     console.log(nome, unidadesMedidaSelecionada);
+    SnackbarUtils.success('Sucesso!', "Produto salvo com sucesso 👍");
     limparForm()
   }
 
