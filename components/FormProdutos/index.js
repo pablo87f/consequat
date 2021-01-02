@@ -60,7 +60,9 @@ export default function FormProdutos({ produto }) {
             }}></TextField>
           </Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
-            <Autocomplete options={unidadesMedida}
+            <Autocomplete 
+              key={unidadesMedidaSelecionada?.nome || ''}
+              options={unidadesMedida}
               value={unidadesMedidaSelecionada}
               onChange={handleChangeUnidadeMedida}
               getOptionLabel={(option) => FormatarUnidadesMedidaService.executar(option)}
