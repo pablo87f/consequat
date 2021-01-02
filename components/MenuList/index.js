@@ -15,7 +15,7 @@ import { List } from '@material-ui/core';
 export default function MenuList({ menuItems, selectedMenuValue }) {
   return (
     <List>
-      {menuItems.map(itemProps => <MenuItem {...itemProps} selected={selectedMenuValue === itemProps.value}></MenuItem>)}
+      {menuItems.map(itemProps => <MenuItem key={itemProps.title} {...itemProps} selected={selectedMenuValue === itemProps.value}></MenuItem>)}
     </List>
     
   )
