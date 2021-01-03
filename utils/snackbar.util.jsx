@@ -1,10 +1,8 @@
-import React from 'react';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { useSnackbar } from 'notistack';
+import React from "react";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import { useSnackbar } from "notistack";
 
-const InnerSnackbarUtilsConfigurator = ({
-  setUseSnackbarRef,
-}) => {
+const InnerSnackbarUtilsConfigurator = ({ setUseSnackbarRef }) => {
   setUseSnackbarRef(useSnackbar());
   return null;
 };
@@ -23,29 +21,23 @@ const handleOnclose = (key) => {
   useSnackbarRef?.closeSnackbar(key);
 };
 export default {
-  success(title, text, key = 'alertSucess') {
-    this.toast(title, text, 'success', key);
+  success(text, title = "Sucesso!", key = "alertSucess") {
+    this.toast(text, title, "success", key);
   },
-  warning(title, text, key = 'alertWarning') {
-    this.toast(title, text, 'warning', key);
+  warning(text, title = "Atenção!", key = "alertWarning") {
+    this.toast(text, title, "warning", key);
   },
-  info(title, text, key = 'alertInfo') {
-    this.toast(title, text, 'info', key);
+  info(text, title = "Informativo", key = "alertInfo") {
+    this.toast(text, title, "info", key);
   },
-  error(title, text, key = 'alertError') {
-    this.toast(title, text, 'error', key);
+  error(text, title = "Erro!", key = "alertError") {
+    this.toast(text, title, "error", key, 5000);
   },
-  toast(
-    title,
-    text,
-    severity,
-    key = 'alert',
-    autoHideDuration = 3000,
-  ) {
+  toast(text, title, severity, key = "alert", autoHideDuration = 3000) {
     useSnackbarRef?.enqueueSnackbar(text, {
       key,
       autoHideDuration,
-      anchorOrigin: { horizontal: 'right', vertical: 'bottom' },
+      anchorOrigin: { horizontal: "right", vertical: "bottom" },
       onClick: () => handleOnclose(key),
       content: (
         <Alert severity={severity} onClose={() => handleOnclose(key)}>
