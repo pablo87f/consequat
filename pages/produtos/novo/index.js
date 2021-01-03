@@ -1,10 +1,18 @@
 import FormProdutos from "../../../components/FormProdutos";
 import MainLayout from "../../../layouts/main.layout";
+import { UnidadesMedidaService } from "../../../services/UnidadesMedida.service";
 
-export default function Novo() {
+function Novo({ unidadesMedida }) {
   return (
-    <MainLayout selectedMenuValue={"receitas"}>
-      <FormProdutos produto={null}/>
+    <MainLayout selectedMenuValue={"produtos"}>
+      <FormProdutos produto={null} unidadesMedida={unidadesMedida} />
     </MainLayout>
   );
 }
+
+Novo.getInitialProps = async (ctx) => {
+  const unidadesMedida = await UnidadesMedidaService.recuperarTodos();
+  return { unidadesMedida: unidadesMedida };
+};
+
+export default Novo;

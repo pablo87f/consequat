@@ -19,20 +19,14 @@ import {
 import SnackbarUtils from "../../utils/snackbar.util";
 import Link from "next/link";
 import { ProdutoService } from "../../services/Produto.service";
+import { UnidadesMedidaService } from "../../services/UnidadesMedida.service";
 
-export default function FormProdutos({ produto }) {
+function FormProdutos({ produto, unidadesMedida }) {
   const [nome, setNome] = useState(produto?.nome);
-
-  const [unidadesMedida, setUnidadesMedida] = useState([]);
 
   const [unidadesMedidaSelecionada, setUnidadesMedidaSelecionada] = useState(
     undefined
   );
-
-  const loadInitialData = async () => {
-    const unidsMedida = await RecuperarUnidadesMedidaService.executar();
-    setUnidadesMedida(unidsMedida);
-  };
 
   const handleChangeUnidadeMedida = (event, value, reason, details) => {
     if (reason === "select-option") {
@@ -52,7 +46,7 @@ export default function FormProdutos({ produto }) {
       console.log(nome, unidadesMedidaSelecionada);
       await ProdutoService.salvar({
         nome: nome,
-        unidadesMedida: unidadesMedidaSelecionada.id,
+        unidadeMedida: unidadesMedidaSelecionada.id,
       });
 
       SnackbarUtils.success("Produto salvo com sucesso 👍");
@@ -62,9 +56,9 @@ export default function FormProdutos({ produto }) {
     }
   };
 
-  useEffect(() => {
-    loadInitialData();
-  }, []);
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <Paper
@@ -88,7 +82,7 @@ export default function FormProdutos({ produto }) {
           <Grid item lg={6} md={12} sm={12} xs={12}>
             <Autocomplete
               key={unidadesMedidaSelecionada?.nome || ""}
-              options={unidadesMedida}
+              options={unidadesMedida || []}
               value={unidadesMedidaSelecionada}
               onChange={handleChangeUnidadeMedida}
               getOptionLabel={(option) =>
@@ -137,3 +131,5 @@ export default function FormProdutos({ produto }) {
     </Paper>
   );
 }
+
+export default FormProdutos;

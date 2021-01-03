@@ -1,5 +1,4 @@
-import { ProdutosEndpoints } from "../endpoints/produtos.endpoints";
-import { UnidadesMedidas } from "../utils/unidades-medida";
+import { ProdutosEndpoints } from "../endpoints/Produtos.endpoints";
 
 export const ProdutoService = {
   recuperarTodos: async () => {
