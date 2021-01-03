@@ -1,32 +1,27 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
+  CircularProgress,
   Grid,
   Paper,
   Typography,
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import { Autocomplete } from "@material-ui/lab";
-import { TextField } from "../TextField";
-import { RecuperarUnidadesMedidaService } from "../../services/RecuperarUnidadesMedida.service";
-import {
-  FormatarUnidadesMedidaService as FormatarUnidadeMedidaService,
-  FormatarUnidadesMedidaService,
-} from "../../services/FormatarUnidadeMedida.service";
-import SnackbarUtils from "../../utils/snackbar.util";
 import Link from "next/link";
+import React, { useState } from "react";
+import { FormatarUnidadesMedidaService } from "../../services/FormatarUnidadeMedida.service";
 import { ProdutoService } from "../../services/Produto.service";
-import { UnidadesMedidaService } from "../../services/UnidadesMedida.service";
+import SnackbarUtils from "../../utils/snackbar.util";
+import { TextField } from "../TextField";
 
 function FormProdutos({ produto, unidadesMedida }) {
   const [nome, setNome] = useState(produto?.nome);
-
   const [unidadesMedidaSelecionada, setUnidadesMedidaSelecionada] = useState(
     undefined
   );
+
+  const [processando, setProcessando] = useState(false);
 
   const handleChangeUnidadeMedida = (event, value, reason, details) => {
     if (reason === "select-option") {
@@ -43,33 +38,80 @@ function FormProdutos({ produto, unidadesMedida }) {
 
   const handleClickSalvar = async () => {
     try {
-      console.log(nome, unidadesMedidaSelecionada);
-      await ProdutoService.salvar({
+      setProcessando(true);
+      const produto = {
         nome: nome,
-        unidadeMedida: unidadesMedidaSelecionada.id,
-      });
+        idUnidadeMedida: unidadesMedidaSelecionada?.id,
+      };
 
-      SnackbarUtils.success("Produto salvo com sucesso 👍");
-      limparForm();
+      if (ProdutoService.validar(produto)) {
+        const retorno = await ProdutoService.cadastrar(produto);
+
+        console.log("retorno", retorno);
+
+        SnackbarUtils.success("Produto salvo com sucesso 👍");
+
+        limparForm();
+      } else {
+        SnackbarUtils.warning("Por favor, preencha os campos corretamente");
+      }
     } catch (ex) {
-      SnackbarUtils.error("Produto salvo com sucesso 👍");
+      console.log(ex);
+      SnackbarUtils.error("Houve uma falha ao salvar o produto");
+    } finally {
+      setProcessando(false);
     }
   };
 
-  // useEffect(() => {
-
-  // }, []);
+  const loadingIndicator = processando ? (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        flex: 1,
+        justifyContent: "center",
+        margin: "10px auto",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          height: 100,
+          position: "absolute",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    </div>
+  ) : null;
 
   return (
     <Paper
-      style={{ padding: 16, display: "flex", flex: 1, flexDirection: "column" }}
+      style={{
+        padding: 16,
+        display: "flex",
+        flex: 1,
+        flexDirection: "column",
+      }}
     >
       <Typography variant="h5" align="left" component="h1" gutterBottom>
         Cadastro de produto
       </Typography>
 
       <form onSubmit={() => {}} noValidate>
-        <Grid container alignItems="flex-start" spacing={3}>
+        {loadingIndicator}
+        <Grid
+          container
+          alignItems="flex-start"
+          spacing={3}
+          style={{
+            opacity: processando ? 0.5 : 1,
+            pointerEvents: processando ? "none" : "initial",
+          }}
+        >
           <Grid item lg={6} md={12} sm={12} xs={12}>
             <TextField
               label="Nome"
